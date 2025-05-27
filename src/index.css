@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+body {
+  background-color: rgb(225, 225, 225);
+  background-image: url("./assets/office.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
