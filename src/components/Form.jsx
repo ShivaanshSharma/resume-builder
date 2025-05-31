@@ -83,32 +83,32 @@ export const Form = () => {
 
   return (
     <>
-    <div className='mx-auto my-12 w-fit bg-white px-6 pt-6 pb-3 rounded-2xl shadow-xl '>
-        <form className='flex flex-col gap-3 text-center'>
-            <span className='text-2xl mb-3'>Enter your details</span>
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>Name: </label>
-                <input onChange={nameChangeHandler} className='border-1 rounded p-1 w-xs' type='text'/>
+    <div className='lg:min-w-112 md:min-w-112 sm:min-w-112 mx-auto my-12 w-fit bg-white px-6 pt-6 pb-3 rounded-2xl shadow-xl min-w-85  '>
+        <form className='flex flex-col gap-2'>
+            <span className='text-2xl mb-3 text-center'>Enter your details</span>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>Name: </label>
+                <input onChange={nameChangeHandler} className='border-1 rounded p-1 ' type='text'/>
             </span>
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>Email: </label>
-                <input onChange={emailChangeHandler} className='border-1 rounded p-1 w-xs' type='text'/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>Email: </label>
+                <input onChange={emailChangeHandler} className='border-1 rounded p-1 ' type='text'/>
             </span>
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>Phone: </label>
-                <input onChange={phoneChangeHandler} className='border-1 rounded p-1 w-xs' type='text'/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>Phone: </label>
+                <input onChange={phoneChangeHandler} className='border-1 rounded p-1' type='text'/>
             </span>
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>Role: </label>
-                <input onChange={roleChangeHandler} className='border-1 rounded p-1 w-xs' type='text'/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>Role: </label>
+                <input onChange={roleChangeHandler} className='border-1 rounded p-1' type='text'/>
             </span>
-            <span className='flex flex-row gap-3 items-center justify-between'>
-                <label>Profile: </label>
-                <textarea onChange={aboutChangeHandler} className='border-1 rounded p-1 w-xs' type='text'/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>Profile: </label>
+                <textarea onChange={aboutChangeHandler} className='border-1 rounded p-1 ' type='text'/>
             </span>
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>No of Experience: </label>
-                <input className='border-1 rounded p-1 w-xs' value={experience} type='number' onChange={experienceChangeHandler}/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>No of Experience: </label>
+                <input className='border-1 rounded p-1 ' value={experience} type='number' onChange={experienceChangeHandler}/>
             </span>
             { experience > 0 ? 
 
@@ -154,9 +154,9 @@ export const Form = () => {
                 }
             </span>
             : null }
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>No of projects: </label>
-                <input className='border-1 rounded p-1 w-xs' value={project} type='number' onChange={projectChangeHandler}/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>No of projects: </label>
+                <input className='border-1 rounded p-1 ' value={project} type='number' onChange={projectChangeHandler}/>
             </span>
 
             { project > 0 ? 
@@ -193,14 +193,14 @@ export const Form = () => {
             </span>
             : null }
 
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>Skills: </label>
-                <textarea className='border-1 rounded p-1 w-xs' value={skills} type='text' onChange={skillsChangeHandler}/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>Skills: </label>
+                <textarea className='border-1 rounded p-1 ' value={skills} type='text' onChange={skillsChangeHandler}/>
             </span>
 
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>No of Degrees: </label>
-                <input className='border-1 rounded p-1 w-xs' value={education} type='number' onChange={educationChangeHandler}/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>No of Degrees: </label>
+                <input className='border-1 rounded p-1' value={education} type='number' onChange={educationChangeHandler}/>
             </span>
 
             <span className='flex flex-col gap-3'>
@@ -234,19 +234,22 @@ export const Form = () => {
                 }
             </span>
 
-            <span className='flex flex-row gap-3 justify-between items-center'>
-                <label>Awards/Certificates/Language: </label>
-                <textarea className='border-1 rounded p-1 w-xs' value={extras} type='text' onChange={extrasChangeHandler}/>
+            <span className='flex flex-col gap-1 justify-between'>
+                <label className='font-medium'>Awards/Certificates/Language: </label>
+                <textarea className='border-1 rounded p-1 ' value={extras} type='text' onChange={extrasChangeHandler}/>
             </span>
-
+            
         </form>
+            <div className='text-center w-12/12 mt-3 p-3'>
+                <PDFDownloadLink document={<Resume useExtras={extras} useSkills={skills} useName={name} usePhone={phone} useRole={role} useEmail={email} useAbout={about} useExperience={experienceDetails} useProject={projectDetails} useEducation={educationDetails}/> } fileName='resume.pdf'>
+                    <button className=' duration-150 cursor-pointer border-1 p-3 rounded-xl bg-gray-700 text-white hover:bg-white hover:text-gray-700'>Download Resume</button>
+                </PDFDownloadLink>
+            </div>
     </div>
-    <PDFViewer width="100%" height="100%">
+    {/* <PDFViewer width="100%" height="100%">
         <Resume useExtras={extras} useSkills={skills} useName={name} usePhone={phone} useEmail={email} useRole={role} useAbout={about} useExperience={experienceDetails} useProject={projectDetails} useEducation={educationDetails} />
-    </PDFViewer>
-    <PDFDownloadLink document={<Resume useExtras={extras} useSkills={skills} useName={name} usePhone={phone} useRole={role} useEmail={email} useAbout={about} useExperience={experienceDetails} useProject={projectDetails} useEducation={educationDetails}/> } fileName='resume.pdf'>
-        <button>Download</button>
-    </PDFDownloadLink>
+    </PDFViewer> */}
+
     </>
   )
 }
