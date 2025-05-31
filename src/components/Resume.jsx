@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold'
   },
+  title2: {
+    fontSize: 13,
+    fontWeight: 'bold'
+  },
   normal: {
     fontSize: 11,
     marginRight: 30,
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, useProject, useEducation}) => {
+export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, useProject, useEducation, useRole, useSkills, useExtras}) => {
 
   console.log(useProject);
 
@@ -54,6 +58,7 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
             <Text style={styles.title}>{useName}</Text>
             <Text style={styles.normal}>{useEmail}</Text>
             <Text style={styles.normal}>{usePhone}</Text>
+            <Text style={styles.title2}>{useRole}</Text>
           </View>
           <View style={styles.headingStyle}>
             <Text style={styles.normalHeadings}>About me</Text>
@@ -95,6 +100,14 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
               )
             }) }
           </View>
+
+          <View style={styles.headingStyle}>
+            <Text style={styles.normalHeadings}>Skills</Text>
+          </View>
+          <View>
+            <Text style={styles.normal}>{useSkills}</Text>
+          </View>
+
           <View style={styles.headingStyle}>
             <Text style={styles.normalHeadings}>Education</Text>
           </View>
@@ -109,6 +122,12 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
                 </View>
               )
             }) }
+          </View>
+          <View style={styles.headingStyle}>
+            <Text style={styles.normalHeadings}>Awards/Certificates/Language</Text>
+          </View>
+          <View>
+            <Text style={styles.normal}>{useExtras}</Text>
           </View>
         </Page>
     </Document>
