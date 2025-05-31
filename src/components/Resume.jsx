@@ -1,44 +1,41 @@
-import { Document, Page, Text, StyleSheet, View } from '@react-pdf/renderer'
-import React from 'react'
+import { Document, Page, Text, StyleSheet, View, Font } from '@react-pdf/renderer'
+import React from 'react';
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    gap: 3
+    gap: 6,
+    paddingBottom: 30,
+    paddingTop: 30,
+    paddingLeft: 30,
   },
-  top: {
-    marginLeft: 30,
-    marginTop: 20,
-  },
+
   title: {
-    fontSize: 24
-  },
-  section: {
-    marginLeft: 30,
+    fontSize: 24,
+    fontWeight: 'bold'
   },
   normal: {
-    fontSize: 12,
+    fontSize: 11,
     marginRight: 30,
-    fontWeight: 'normal'
+    fontWeight: 'normal',
+    lineHeight: '1.4'
   },
   normalHeadings: {
     fontSize: 12,
     padding: 4,
-    marginRight: 30,
     color: 'white',
   },
   headingStyle: {
-    marginLeft: 30,
     marginRight: 30,
-    backgroundColor: 'rgb(50, 168, 82)',
+    backgroundColor: 'rgb(60, 179, 113)',
     borderRadius: 5,
   },
   highlighted: {
-    marginLeft: 30,
     marginRight: 30,
     font: 'bold',
-    fontSize: 12,
-    fontWeight: 'bold'
+    fontSize: 11,
+    fontWeight: 'bold',
+    marginBottom: 3
   },
   flexy: {
     flexDirection: 'row',
@@ -46,7 +43,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience}) => {
+export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, useProject, useEducation}) => {
+
+  console.log(useProject);
 
   return (
     <Document>
@@ -59,7 +58,7 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience}) =
           <View style={styles.headingStyle}>
             <Text style={styles.normalHeadings}>About me</Text>
           </View>
-          <View style={styles.section}>
+          <View>
             <Text style={styles.normal}>{useAbout}</Text>
           </View>
           { useExperience.length === 0 ? null :           
@@ -74,7 +73,7 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience}) =
                     <Text style={styles.highlighted}>{exp.title}</Text>
                     <Text style={styles.highlighted}>{exp.duration}</Text>
                   </View>
-                  <View style={{marginLeft: 30}}>
+                  <View>
                     <Text style={styles.normal}>{exp.description}</Text>
                   </View>
                 </View>
@@ -83,6 +82,33 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience}) =
           </View>
           <View style={styles.headingStyle}>
             <Text style={styles.normalHeadings}>Projects</Text>
+          </View>
+          <View style={{flexDirection: 'column', gap: 6}}>
+            { useProject.map((prj) => {
+              return (
+                <View>
+                    <Text style={styles.highlighted}>{prj.name}</Text>
+                    <View style={styles.section}>
+                      <Text style={styles.normal}>{prj.description}</Text>
+                    </View>
+                </View>
+              )
+            }) }
+          </View>
+          <View style={styles.headingStyle}>
+            <Text style={styles.normalHeadings}>Education</Text>
+          </View>
+          <View style={{flexDirection: 'column', gap: 6}}>
+            { useEducation.map((edu) => {
+              return (
+                <View>
+                    <Text style={styles.highlighted}>{edu.title}</Text>
+                    <View style={styles.section}>
+                      <Text style={styles.normal}>{edu.description}</Text>
+                    </View>
+                </View>
+              )
+            }) }
           </View>
         </Page>
     </Document>
