@@ -1,15 +1,24 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import { Document, Page, PDFViewer, View, Text, PDFDownloadLink } from '@react-pdf/renderer';
 import { Resume } from './Resume';
 
 export const Form = () => {
 
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [phone, setPhone] = useState();
-    const [about, setAbout] = useState();
-    const [experience, setExperience] = useState();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [about, setAbout] = useState('');
+    const [experience, setExperience] = useState(0);
+    const [experienceDetails, setExperienceDetails] = useState([]);
+
+    useEffect(() => {
+        const newExperience = Array.from({length: experience}, (_, index) => {
+            return experienceDetails[index] || { title: '', duration: '', description: '' };
+        });
+        
+          setExperienceDetails(newExperience);
+    }, [experience])
 
     const nameChangeHandler = (e) => {
         setName(e.target.value);
@@ -29,9 +38,10 @@ export const Form = () => {
     }
 
     const experienceChangeHandler = (e) => {
-        setExperience(e.target.value);
-        console.log(experience);
+        setExperience(Number(e.target.value));
     }
+
+
 
   return (
     <>
@@ -59,14 +69,50 @@ export const Form = () => {
                 <input className='border-1 rounded p-1 w-xs' value={experience} type='number' onChange={experienceChangeHandler}/>
             </span>
             <span className='flex flex-col gap-3'>
-                    {Array.from({ length: experience }).map((_,index) => (
-                        <input type='text' className='border-1 rounded p-1 w-full' placeholder={`Experience ${index+1}`} />
-                    ))}
+                {
+                    experienceDetails.map((exp, index) => { return (
+                        <span key={index} className='flex flex-col gap-2'>
+                            <input 
+                                type='text'
+                                value={exp.title}
+                                placeholder={`Experience ${index+1}`}
+                                className='border rounded p-1 w-full'
+                                onChange={(e) => {
+                                    const updated = [...experienceDetails];
+                                    updated[index].title = e.target.value;
+                                    setExperienceDetails(updated);
+                                }}
+                            />
+                            <input 
+                                type='text'
+                                value={exp.duration}
+                                placeholder={`Duration ${index+1}`}
+                                className='border rounded p-1 w-full'
+                                onChange={(e) => {
+                                    const updated = [...experienceDetails];
+                                    updated[index].duration = e.target.value;
+                                    setExperienceDetails(updated);
+                                }}
+                            />
+                            <input 
+                                type='text'
+                                value={exp.description}
+                                placeholder={`Description ${index+1}`}
+                                className='border rounded p-1 w-full'
+                                onChange={(e) => {
+                                    const updated = [...experienceDetails];
+                                    updated[index].description = e.target.value;
+                                    setExperienceDetails(updated);
+                                }}
+                            />
+                        </span>
+                    )})
+                }
             </span>
         </form>
     </div>
     <PDFViewer width="100%" height="100%">
-        <Resume useName={name} usePhone={phone} useEmail={email} useAbout={about} />
+        <Resume useName={name} usePhone={phone} useEmail={email} useAbout={about} useExperience={experienceDetails} />
     </PDFViewer>
     </>
   )
