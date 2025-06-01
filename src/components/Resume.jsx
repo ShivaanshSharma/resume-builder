@@ -85,9 +85,10 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
               )
             }) }
           </View>
+          { useProject.length === 0 ? null :
           <View style={styles.headingStyle}>
             <Text style={styles.normalHeadings}>Projects</Text>
-          </View>
+          </View> }
           <View style={{flexDirection: 'column', gap: 6}}>
             { useProject.map((prj) => {
               return (
@@ -107,10 +108,10 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
           <View>
             <Text style={styles.normal}>{useSkills}</Text>
           </View>
-
+          { useEducation.length === 0 ? null :
           <View style={styles.headingStyle}>
             <Text style={styles.normalHeadings}>Education</Text>
-          </View>
+          </View>  }
           <View style={{flexDirection: 'column', gap: 6}}>
             { useEducation.map((edu) => {
               return (

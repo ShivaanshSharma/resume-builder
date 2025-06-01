@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-import { Document, Page, PDFViewer, View, Text, PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { Resume } from './Resume';
 
 export const Form = () => {
@@ -18,6 +18,8 @@ export const Form = () => {
     const [projectDetails, setProjectDetails] = useState([]);
     const [education, setEducation] = useState(0);
     const [educationDetails, setEducationDetails] = useState([]);
+    const [validation, setValidation] = useState(false);
+    const [loading, setLoading] = useState(false);
     
     useEffect(() => {
         const newExperience = Array.from({length: experience}, (_, index) => {
@@ -81,30 +83,45 @@ export const Form = () => {
         setEducation(Number(e.target.value));
     }
 
+    const downloadHandler = () => {
+        if (name.length > 0) {
+            setValidation(true);
+        }
+    }
+
+    const validationHandler = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setInterval(() => {
+            setLoading(false);
+            setValidation(true);
+        }, 3000)
+    }
+
   return (
     <>
     <div className='lg:min-w-112 md:min-w-112 sm:min-w-112 mx-auto my-12 w-fit bg-white px-6 pt-6 pb-3 rounded-2xl shadow-xl min-w-85  '>
-        <form className='flex flex-col gap-2'>
+        <form className='flex flex-col gap-2' onSubmit={validationHandler}>
             <span className='text-2xl mb-3 text-center'>Enter your details</span>
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>Name: </label>
-                <input onChange={nameChangeHandler} className='border-1 rounded p-1 ' type='text'/>
+                <input required onChange={nameChangeHandler} className='border-1 rounded p-1 ' type='text'/>
             </span>
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>Email: </label>
-                <input onChange={emailChangeHandler} className='border-1 rounded p-1 ' type='text'/>
+                <input required onChange={emailChangeHandler} className='border-1 rounded p-1 ' type='email'/>
             </span>
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>Phone: </label>
-                <input onChange={phoneChangeHandler} className='border-1 rounded p-1' type='text'/>
+                <input required onChange={phoneChangeHandler} className='border-1 rounded p-1' type='number'/>
             </span>
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>Role: </label>
-                <input onChange={roleChangeHandler} className='border-1 rounded p-1' type='text'/>
+                <input required onChange={roleChangeHandler} className='border-1 rounded p-1' type='text'/>
             </span>
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>Profile: </label>
-                <textarea onChange={aboutChangeHandler} className='border-1 rounded p-1 ' type='text'/>
+                <textarea required onChange={aboutChangeHandler} className='border-1 rounded p-1 ' type='text'/>
             </span>
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>No of Experience: </label>
@@ -166,6 +183,7 @@ export const Form = () => {
                     projectDetails.map((prj, index) => { return (
                         <span key={index} className='flex flex-col gap-2'>
                             <input 
+                                required
                                 type='text'
                                 value={prj.name}
                                 placeholder={`Project ${index+1} Name`}
@@ -177,6 +195,7 @@ export const Form = () => {
                                 }}
                             />
                             <textarea 
+                                required
                                 type='text'
                                 value={prj.description}
                                 placeholder={`Project ${index+1} Description`}
@@ -195,12 +214,12 @@ export const Form = () => {
 
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>Skills: </label>
-                <textarea className='border-1 rounded p-1 ' value={skills} type='text' onChange={skillsChangeHandler}/>
+                <textarea required className='border-1 rounded p-1 ' value={skills} type='text' onChange={skillsChangeHandler}/>
             </span>
 
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>No of Degrees: </label>
-                <input className='border-1 rounded p-1' value={education} type='number' onChange={educationChangeHandler}/>
+                <input required className='border-1 rounded p-1' value={education} type='number' onChange={educationChangeHandler}/>
             </span>
 
             <span className='flex flex-col gap-3'>
@@ -208,6 +227,7 @@ export const Form = () => {
                     educationDetails.map((edu, index) => { return (
                         <span key={index} className='flex flex-col gap-2'>
                             <input 
+                                required
                                 type='text'
                                 value={edu.title}
                                 placeholder={`Degree ${index+1} Name`}
@@ -219,6 +239,7 @@ export const Form = () => {
                                 }}
                             />
                             <textarea 
+                                required
                                 type='text'
                                 value={edu.description}
                                 placeholder={`Degree ${index+1} Description`}
@@ -236,15 +257,20 @@ export const Form = () => {
 
             <span className='flex flex-col gap-1 justify-between'>
                 <label className='font-medium'>Awards/Certificates/Language: </label>
-                <textarea className='border-1 rounded p-1 ' value={extras} type='text' onChange={extrasChangeHandler}/>
+                <textarea required className='border-1 rounded p-1 ' value={extras} type='text' onChange={extrasChangeHandler}/>
             </span>
-            
-        </form>
+            {!validation && 
             <div className='text-center w-12/12 mt-3 p-3'>
+                <button className='duration-150 cursor-pointer border-1 p-3 rounded-xl bg-gray-700 text-white hover:bg-white hover:text-gray-700'>{ loading ? 'Generating...' : 'Generate PDF' }</button>
+            </div> }
+        </form>
+            {validation && <div className='text-center w-12/12 mt-3 p-3'>   
+                
                 <PDFDownloadLink document={<Resume useExtras={extras} useSkills={skills} useName={name} usePhone={phone} useRole={role} useEmail={email} useAbout={about} useExperience={experienceDetails} useProject={projectDetails} useEducation={educationDetails}/> } fileName='resume.pdf'>
-                    <button className=' duration-150 cursor-pointer border-1 p-3 rounded-xl bg-gray-700 text-white hover:bg-white hover:text-gray-700'>Download Resume</button>
-                </PDFDownloadLink>
-            </div>
+                    <button onClick={downloadHandler} className=' duration-150 cursor-pointer border-1 p-3 rounded-xl bg-gray-700 text-white hover:bg-white hover:text-gray-700'>Download Resume</button>
+                </PDFDownloadLink> 
+            </div>}
+
     </div>
     {/* <PDFViewer width="100%" height="100%">
         <Resume useExtras={extras} useSkills={skills} useName={name} usePhone={phone} useEmail={email} useRole={role} useAbout={about} useExperience={experienceDetails} useProject={projectDetails} useEducation={educationDetails} />
