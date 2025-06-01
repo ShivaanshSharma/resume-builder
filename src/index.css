@@ -4,7 +4,7 @@ body {
   background-color: rgb(225, 225, 225);
   background-image: url("./assets/office.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
-  
+  background-size:540vmin;
+  backdrop-filter: blur(5px);
 }
 

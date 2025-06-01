@@ -11,11 +11,11 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold'
   },
   title2: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: 'bold'
   },
   normal: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     lineHeight: '1.4'
   },
   normalHeadings: {
-    fontSize: 12,
+    fontSize: 11,
     padding: 4,
     color: 'white',
   },
@@ -73,7 +73,7 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
           <View style={{flexDirection: 'column', gap: 6}}>
             { useExperience.map((exp) => {
               return (
-                <View>
+                <View wrap={false}>
                   <View style={styles.flexy}>
                     <Text style={styles.highlighted}>{exp.title}</Text>
                     <Text style={styles.highlighted}>{exp.duration}</Text>
@@ -91,7 +91,7 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
           <View style={{flexDirection: 'column', gap: 6}}>
             { useProject.map((prj) => {
               return (
-                <View>
+                <View wrap={false}>
                     <Text style={styles.highlighted}>{prj.name}</Text>
                     <View style={styles.section}>
                       <Text style={styles.normal}>{prj.description}</Text>
@@ -114,7 +114,7 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
           <View style={{flexDirection: 'column', gap: 6}}>
             { useEducation.map((edu) => {
               return (
-                <View>
+                <View wrap={false}>
                     <Text style={styles.highlighted}>{edu.title}</Text>
                     <View style={styles.section}>
                       <Text style={styles.normal}>{edu.description}</Text>
@@ -123,11 +123,13 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
               )
             }) }
           </View>
-          <View style={styles.headingStyle}>
-            <Text style={styles.normalHeadings}>Awards/Certificates/Language</Text>
-          </View>
-          <View>
-            <Text style={styles.normal}>{useExtras}</Text>
+          <View wrap={false} style={{flexDirection: 'column', gap: 6}}>
+            <View style={styles.headingStyle}>
+              <Text style={styles.normalHeadings}>Awards/Certificates/Language</Text>
+            </View>
+            <View>
+              <Text style={styles.normal}>{useExtras}</Text>
+            </View>
           </View>
         </Page>
     </Document>
