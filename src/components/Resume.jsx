@@ -9,14 +9,23 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingLeft: 30,
   },
-
+  top: {
+    flexDirection: 'column',
+    gap: 1
+  },
   title: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: 'bold'
   },
   title2: {
-    fontSize: 14,
-    fontWeight: 'bold'
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
+  },
+  contact: {
+    fontSize: 11,
+    marginRight: 30,
+    fontWeight: 'normal',
   },
   normal: {
     fontSize: 11,
@@ -56,9 +65,9 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
         <Page style={styles.page}>
           <View style={styles.top}>
             <Text style={styles.title}>{useName}</Text>
-            <Text style={styles.normal}>{useEmail}</Text>
-            <Text style={styles.normal}>{usePhone}</Text>
             <Text style={styles.title2}>{useRole}</Text>
+            <Text style={styles.contact}>{useEmail}</Text>
+            <Text style={styles.contact}>{usePhone}</Text>
           </View>
           <View style={styles.headingStyle}>
             <Text style={styles.normalHeadings}>About me</Text>
