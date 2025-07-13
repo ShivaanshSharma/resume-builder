@@ -110,12 +110,13 @@ export const Resume = ({useName, useEmail, usePhone, useAbout, useExperience, us
               )
             }) }
           </View>
-
-          <View style={styles.headingStyle}>
-            <Text style={styles.normalHeadings}>Skills</Text>
-          </View>
-          <View>
-            <Text style={styles.normal}>{useSkills}</Text>
+          <View wrap={false}>
+            <View style={styles.headingStyle}>
+              <Text style={styles.normalHeadings}>Skills</Text>
+            </View>
+            <View>
+              <Text style={styles.normal}>{useSkills}</Text>
+            </View>
           </View>
           { useEducation.length === 0 ? null :
           <View style={styles.headingStyle}>

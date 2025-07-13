@@ -90,7 +90,7 @@ export const Form = () => {
             <span className='flex flex-col gap-3'>
                 {
                     experienceDetails.map((exp, index) => { return (
-                        <Experience exp={exp} index={index} experienceDetails={experienceDetails} onUpdate={setEducationDetails} />
+                        <Experience key={index} exp={exp} index={index} experienceDetails={experienceDetails} onUpdate={setExperienceDetails} />
                     )})
                 }
             </span>
